@@ -5,10 +5,12 @@ export default class extends Phaser.Sprite {
     super(game, x, y, asset);
     this.anchor.setTo(0.5);
     this.velocity = {x: 0, y: 0};
+    this.rotVelocity = 0;
+    this.hp = 3;
+    this.randomizeDirection();
   }
 
   update(delta) {
-    this._handleInput(delta);
     this.move();
     this.forceInBounds();
   }
@@ -16,6 +18,15 @@ export default class extends Phaser.Sprite {
   move() {
     this.x += this.velocity.x;
     this.y += this.velocity.y;
+    this.angle += this.rotVelocity;
+  }
+
+  randomizeDirection() {
+      this.velocity = {x: Math.random(), y: Math.random()};
+      this.angle = Math.random()*360;
+      this.x = Math.random()*this.game.world.width;
+      this.y = Math.random()*this.game.world.height;
+      this.rotVelocity = Math.random()*2-1;
   }
 
   forceInBounds() {
@@ -27,25 +38,6 @@ export default class extends Phaser.Sprite {
       this.velocity.y *= -1;
       this.angle += 3;
     }
-  }
-
-  _handleInput(delta) {
-
-    let cursors = this.game.input.keyboard.createCursorKeys();
-
-    if (cursors.up.isDown) {
-      this.velocity.y += -.5;
-    }
-    if (cursors.down.isDown) {
-      this.velocity.y += .5;
-    }
-    if (cursors.left.isDown) {
-      this.velocity.x += -.5;
-    }
-    if (cursors.right.isDown) {
-      this.velocity.x += .5;
-    }
-
   }
 
 }
