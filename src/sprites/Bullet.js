@@ -8,13 +8,14 @@ export default class extends Phaser.Sprite {
     this.rotVelocity = 0;
   }
 
-  update(delta) {
-    this.move();
+  update() {
+    var delta = 
+    this.move(this.game.getDelta());
   }
 
-  move() {
-    this.x += this.velocity.x;
-    this.y += this.velocity.y;
+  move(delta) {
+    this.x += this.velocity.x * delta;
+    this.y += this.velocity.y * delta;
   }
 
   isOutOfBounds() {
@@ -32,6 +33,10 @@ export default class extends Phaser.Sprite {
       return true;
     }
     return false;
+  }
+
+  destroy() {
+
   }
 
 }

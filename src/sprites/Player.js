@@ -1,5 +1,7 @@
 import Phaser from 'phaser'
 
+const PLAYER_ACCELERATION = .02;
+
 export default class extends Phaser.Sprite {
   constructor({ game, x, y, asset }) {
     super(game, x, y, asset);
@@ -14,8 +16,8 @@ export default class extends Phaser.Sprite {
   }
 
   move() {
-    this.x += this.velocity.x;
-    this.y += this.velocity.y;
+    this.x += this.velocity.x * this.game.getDelta();
+    this.y += this.velocity.y * this.game.getDelta();
   }
 
   decelerate() {
@@ -62,16 +64,16 @@ export default class extends Phaser.Sprite {
     };
 
     if (wasd.up.isDown) {
-      this.velocity.y += -.5;
+      this.velocity.y += -PLAYER_ACCELERATION;
     }
     if (wasd.down.isDown) {
-      this.velocity.y += .5;
+      this.velocity.y += PLAYER_ACCELERATION;
     }
     if (wasd.right.isDown) {
-      this.velocity.x += .5;
+      this.velocity.x += PLAYER_ACCELERATION;
     }
     if (wasd.left.isDown) {
-      this.velocity.x += -.5;
+      this.velocity.x += -PLAYER_ACCELERATION;
     }
     if (wasd.rotRight.isDown) {
       //this.angle += 2;

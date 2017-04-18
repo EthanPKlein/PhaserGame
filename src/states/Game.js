@@ -48,6 +48,9 @@ export default class extends Phaser.State {
   }
 
   update() {
+
+    //var delta = this.time.now - this.time.prevTime;
+
     this.space.update();
 
     // clean up old bullets
@@ -58,7 +61,6 @@ export default class extends Phaser.State {
       for (var j = 0; j < this.asteroids.length; j++) {
         var asteroid = this.asteroids[j];
         if (b.isCollidingWithEntity(asteroid)) {
-          //console.log('hit on asteroid: ' + j);
           this.asteroids.splice(j, 1);
           asteroid.destroy();
         }
@@ -84,13 +86,13 @@ export default class extends Phaser.State {
       });
 
       if (i===0) {
-        bullet1.velocity.x = 10;
+        bullet1.velocity.x = .3;
       } else if (i===1) {
-        bullet1.velocity.x = -10;
+        bullet1.velocity.x = -.3;
       } else if (i===2) {
-        bullet1.velocity.y = 10;
+        bullet1.velocity.y = .3;
       } else {
-        bullet1.velocity.y = -10;
+        bullet1.velocity.y = -.3;
       }
       
       this.bullets.push(bullet1);
@@ -102,5 +104,9 @@ export default class extends Phaser.State {
     if (__DEV__) {
       //this.game.debug.spriteInfo(this.mushroom, 32, 32)
     }
+  }
+
+  getDelta() {
+    return this.time.now - this.time.prevTime;
   }
 }
