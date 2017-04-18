@@ -7,13 +7,16 @@ export default class extends Phaser.Sprite {
     super(game, x, y, asset);
     this.anchor.setTo(0.5);
     this.velocity = {x: 0, y: 0};
-    this.health = 1;
+    this.health = 3;
+    this.invulerableTimer = 4000;
+    this.alpha = .5;
   }
 
   update(delta) {
     this._handleInput(delta);
     this.move();
     this.forceInBounds();
+    this.invulerableTimer-= this.game.getDelta();
   }
 
   move() {
@@ -64,6 +67,19 @@ export default class extends Phaser.Sprite {
       return true;
     }
     return false;
+  }
+
+  isInvulnerable() {
+    if (this.invulerableTimer > 0) {
+      this.alpha = .3;
+    } else {
+      this.alpha = 1;
+    }
+    return this.invulerableTimer > 0;
+  }
+
+  setInvulnerable(time) {
+    this.invulerableTimer = time;
   }
 
   _handleInput(delta) {

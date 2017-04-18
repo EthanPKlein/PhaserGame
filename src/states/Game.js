@@ -5,8 +5,9 @@ import Asteroid from '../sprites/Asteroid'
 import Space from '../environment/Space'
 import Bullet from '../sprites/Bullet'
 
-var ASTEROID_COUNT = 25;
-var NO_FIRE_COOLDOWN = 200;
+const ASTEROID_COUNT = 25;
+const NO_FIRE_COOLDOWN = 400;
+const INVULNERABLE_AFTER_DAMAGE_COOLDOWN = 2000;
 
 export default class extends Phaser.State {
   init() { }
@@ -56,8 +57,14 @@ export default class extends Phaser.State {
     this.space.update();
 
     // damage player if they are hitting an asteroid
-    if (this.player.isCollidingWithAnyInArray(this.asteroids)) {
-      this.player.destroy();
+    if (!this.player.isInvulnerable() && this.player.isCollidingWithAnyInArray(this.asteroids)) {
+      this.player.health--;
+      if (this.player.health <= 0) {
+        this.player.destroy();
+      } else {
+        this.player.setInvulnerable(INVULNERABLE_AFTER_DAMAGE_COOLDOWN);
+      }
+
     }
 
     // clean up old bullets
@@ -84,10 +91,7 @@ export default class extends Phaser.State {
 
   addBullets() {
 
-    console.log(this.fireCooldown);
-
     if (this.fireCooldown > 0) {
-      
       return;
     } else {
       this.fireCooldown = NO_FIRE_COOLDOWN;
