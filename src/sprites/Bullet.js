@@ -28,7 +28,7 @@ export default class extends Phaser.Sprite {
 
   isCollidingWithEntity(entity) {
     var distanceToTarget = Math.sqrt((this.x - entity.x)*(this.x - entity.x) + (this.y - entity.y)*(this.y - entity.y));
-    if (distanceToTarget < 5) {
+    if (distanceToTarget < 15) {
       return true;
     }
     return false;

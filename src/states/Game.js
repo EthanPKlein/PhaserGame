@@ -54,8 +54,19 @@ export default class extends Phaser.State {
     for (var i = 0; i < this.bullets.length; i++) {
       var b = this.bullets[i];
       b.update();
+
+      for (var j = 0; j < this.asteroids.length; j++) {
+        var asteroid = this.asteroids[j];
+        if (b.isCollidingWithEntity(asteroid)) {
+          //console.log('hit on asteroid: ' + j);
+          this.asteroids.splice(j, 1);
+          asteroid.destroy();
+        }
+      }
+
       if (b.isOutOfBounds()) {
         this.bullets.splice(i, 1);
+        b.destroy();
       }
     }
 
@@ -85,36 +96,6 @@ export default class extends Phaser.State {
       this.bullets.push(bullet1);
       this.game.add.existing(bullet1);
     }
-
-    
-
-    // var bullet2 = new Bullet({
-    //   game: this,
-    //   x: this.player.x,
-    //   y: this.player.y,
-    //   asset: 'bullet'
-    // });
-    // bullet2.velocity.y = 10;
-    // this.game.add.existing(bullet2);
-
-    // var bullet3 = new Bullet({
-    //   game: this,
-    //   x: this.player.x,
-    //   y: this.player.y,
-    //   asset: 'bullet'
-    // });
-    // bullet3.velocity.x = -10;
-    // this.game.add.existing(bullet3);
-
-    // var bullet4 = new Bullet({
-    //   game: this,
-    //   x: this.player.x,
-    //   y: this.player.y,
-    //   asset: 'bullet'
-    // });
-    // bullet3.velocity.x = -10;
-    // this.game.add.existing(bullet3);
-
   }
 
   render() {
