@@ -88,6 +88,11 @@ export default class extends Phaser.Sprite {
     this.bullets--;
   }
 
+  changeHealth(change) {
+    this.health += change;
+    if (this.health < 0) { this.health = 0;}
+  }
+
   _handleInput(delta) {
 
     let cursors = this.game.input.keyboard.createCursorKeys();

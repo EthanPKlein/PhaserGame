@@ -16,20 +16,8 @@ export default class extends Phaser.State {
   preload() { }
 
   create() {
-    const bannerText = 'Phaser + ES6 + Webpack'
-    let banner = this.add.text(this.world.centerX, this.game.height - 80, bannerText)
-    banner.font = 'Bangers'
-    banner.padding.set(10, 16)
-    banner.fontSize = 40
-    banner.fill = '#77BFA3'
-    banner.smoothed = false
-    banner.anchor.setTo(0.5)
-
-    // UI stuff
 
     this.space = new Space(this);
-
-
 
     this.player = new Player({
       game: this,
@@ -66,13 +54,12 @@ export default class extends Phaser.State {
 
     this.overlay.update();
 
-    //var delta = this.time.now - this.time.prevTime;
     this.fireCooldown -= this.getDelta();
     this.space.update();
 
     // damage player if they are hitting an asteroid
     if (!this.player.isInvulnerable() && this.player.isCollidingWithAnyInArray(this.asteroids)) {
-      this.player.health--;
+      this.player.changeHealth(-1);
       if (this.player.health <= 0) {
         this.player.destroy();
       } else {
@@ -99,15 +86,7 @@ export default class extends Phaser.State {
         b.destroy();
       }
     }
-
-    this.drawUI();
-
   }
-
-  drawUI() {
-
-  }
-  
 
   addBullets() {
 
