@@ -13,9 +13,17 @@ const STARTING_BULLETS = 100;
 
 export default class extends Phaser.State {
   init() { }
-  preload() { }
+
+  preload() { 
+    game.load.audio('bullet', 'assets/audio/SoundEffects/laser.wav');
+    game.load.audio('explosion', 'assets/audio/SoundEffects/explosion.wav');
+    game.load.audio('music', 'assets/audio/Music/Corruption.mp3');
+
+  }
 
   create() {
+
+    this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
     this.space = new Space(this);
 
@@ -30,6 +38,7 @@ export default class extends Phaser.State {
 
     this.bullets = [];
     this.asteroids = [];
+    this.asteroidsGroup = game.add.physicsGroup(Phaser.Physics.ARCADE);
     for (var i = 0; i < ASTEROID_COUNT; i++) {
       var asteroid = new Asteroid({
         game: this,
@@ -37,8 +46,14 @@ export default class extends Phaser.State {
         y: this.world.centerY,
         asset: 'asteroid'
       });
+
+      this.asteroidsGroup.add(asteroid);
+      
       this.asteroids.push(asteroid);
       this.game.add.existing(asteroid);
+      this.game.physics.enable([asteroid], Phaser.Physics.ARCADE);
+      asteroid.body.bounce.setTo(1);
+
     }
 
     this.game.add.existing(this.player);
@@ -48,9 +63,17 @@ export default class extends Phaser.State {
       player: this.player
     });
 
+    // Sound
+    this.sfxBullet = game.add.audio('bullet');
+    this.sfxExplosion = game.add.audio('explosion');
+    this.music = game.add.audio('music');
+    this.music.loopFull(1);
+
   }
 
   update() {
+
+    this.game.physics.arcade.collide(this.asteroidsGroup);
 
     this.overlay.update();
 
@@ -78,6 +101,7 @@ export default class extends Phaser.State {
         if (b.isCollidingWithEntity(asteroid)) {
           this.asteroids.splice(j, 1);
           asteroid.destroy();
+          this.sfxExplosion.play();
         }
       }
 
@@ -95,6 +119,7 @@ export default class extends Phaser.State {
     } else {
       this.fireCooldown = NO_FIRE_COOLDOWN;
       this.player.useBullet();
+      this.sfxBullet.play();
     }
 
     for (var i = 0; i < 4; i++) {

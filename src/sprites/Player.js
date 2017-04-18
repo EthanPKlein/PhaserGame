@@ -42,11 +42,9 @@ export default class extends Phaser.Sprite {
   forceInBounds() {
     if (this.x > this.game.world.width || this.x < 0) {
       this.velocity.x *= -1;
-      this.angle += 3;
     }
     if (this.y > this.game.world.height || this.y < 0) {
       this.velocity.y *= -1;
-      this.angle += 3;
     }
   }
 
