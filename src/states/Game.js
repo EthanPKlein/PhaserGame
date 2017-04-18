@@ -8,6 +8,7 @@ import Bullet from '../sprites/Bullet'
 const ASTEROID_COUNT = 25;
 const NO_FIRE_COOLDOWN = 400;
 const INVULNERABLE_AFTER_DAMAGE_COOLDOWN = 2000;
+const STARTING_BULLETS = 100;
 
 export default class extends Phaser.State {
   init() { }
@@ -23,7 +24,11 @@ export default class extends Phaser.State {
     banner.smoothed = false
     banner.anchor.setTo(0.5)
 
+    // UI stuff
+
     this.space = new Space(this);
+
+
 
     this.player = new Player({
       game: this,
@@ -48,9 +53,16 @@ export default class extends Phaser.State {
     }
 
     this.game.add.existing(this.player);
+
+    var style = { font: "20px Arial", fill: "#ffffff", align: "center"};
+    this.healthText = this.game.add.text(15, 15, "Health: " + this.player.health, style);
+    this.bulletsText = this.game.add.text(200, 15, "Health: " + this.player.bullets, style);
+
   }
 
   update() {
+    this.healthText.setText("Health: " + this.player.health);
+    this.bulletsText.setText("Ammo: " + this.player.bullets);
 
     //var delta = this.time.now - this.time.prevTime;
     this.fireCooldown -= this.getDelta();
@@ -86,15 +98,22 @@ export default class extends Phaser.State {
       }
     }
 
+    this.drawUI();
+
+  }
+
+  drawUI() {
+
   }
   
 
   addBullets() {
 
-    if (this.fireCooldown > 0) {
+    if (this.fireCooldown > 0 || this.player.bullets <= 0) {
       return;
     } else {
       this.fireCooldown = NO_FIRE_COOLDOWN;
+      this.player.useBullet();
     }
 
     for (var i = 0; i < 4; i++) {

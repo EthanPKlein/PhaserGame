@@ -1,15 +1,17 @@
 import Phaser from 'phaser'
 
 const PLAYER_ACCELERATION = .02;
+const STARTING_BULLETS = 30;
 
 export default class extends Phaser.Sprite {
   constructor({ game, x, y, asset }) {
     super(game, x, y, asset);
-    this.anchor.setTo(0.5);
+    this.anchor.setTo(0.5, 0.5);
     this.velocity = {x: 0, y: 0};
     this.health = 3;
     this.invulerableTimer = 4000;
     this.alpha = .5;
+    this.bullets = STARTING_BULLETS
   }
 
   update(delta) {
@@ -63,7 +65,7 @@ export default class extends Phaser.Sprite {
 
   isCollidingWithEntity(entity) {
     var distanceToTarget = Math.sqrt((this.x - entity.x) * (this.x - entity.x) + (this.y - entity.y) * (this.y - entity.y));
-    if (distanceToTarget < 15) {
+    if (distanceToTarget < 45) {
       return true;
     }
     return false;
@@ -80,6 +82,10 @@ export default class extends Phaser.Sprite {
 
   setInvulnerable(time) {
     this.invulerableTimer = time;
+  }
+
+  useBullet() {
+    this.bullets--;
   }
 
   _handleInput(delta) {
