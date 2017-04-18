@@ -34,6 +34,7 @@ export default class extends Phaser.State {
     });
 
     this.fireCooldown = NO_FIRE_COOLDOWN;
+    this.playerScore = 0;
 
     this.bullets = [];
     this.asteroids = [];
@@ -104,6 +105,7 @@ export default class extends Phaser.State {
           this.asteroids.splice(j, 1);
           asteroid.destroy();
           this.sfxExplosion.play();
+          this.player.score += 100;
         }
       }
 

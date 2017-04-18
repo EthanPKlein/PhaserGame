@@ -11,7 +11,8 @@ export default class extends Phaser.Sprite {
     this.health = 3;
     this.invulerableTimer = 4000;
     this.alpha = .5;
-    this.bullets = STARTING_BULLETS
+    this.bullets = STARTING_BULLETS;
+    this.score = 0;
   }
 
   update(delta) {
