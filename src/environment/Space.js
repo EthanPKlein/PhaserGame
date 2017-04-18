@@ -2,42 +2,14 @@ import Phaser from 'phaser'
 
 export default class Space  {
   constructor({ game }) {
-    //super(game, x, y, asset);
-    // this.anchor.setTo(0.5);
-    // this.velocity = {x: 0, y: 0};
-    // this.rotVelocity = 0;
-    // this.hp = 3;
-    // this.randomizeDirection();
+    this.image = game.add.image(0, 0, 'space');
+   
+    this.image.scale.setTo(2, 2);
+
   }
 
   update(delta) {
-    // this.move();
-    // this.forceInBounds();
+   
   }
-
-  // move() {
-  //   this.x += this.velocity.x;
-  //   this.y += this.velocity.y;
-  //   this.angle += this.rotVelocity;
-  // }
-
-  // randomizeDirection() {
-  //     this.velocity = {x: Math.random(), y: Math.random()};
-  //     this.angle = Math.random()*360;
-  //     this.x = Math.random()*this.game.world.width;
-  //     this.y = Math.random()*this.game.world.height;
-  //     this.rotVelocity = Math.random()*2-1;
-  // }
-
-  // forceInBounds() {
-  //   if (this.x > this.game.world.width || this.x < 0) {
-  //     this.velocity.x *= -1;
-  //     this.angle += 3;
-  //   }
-  //   if (this.y > this.game.world.height || this.y < 0) {
-  //     this.velocity.y *= -1;
-  //     this.angle += 3;
-  //   }
-  // }
 
 }

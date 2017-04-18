@@ -22,7 +22,7 @@ export default class extends Phaser.Sprite {
   }
 
   randomizeDirection() {
-      this.velocity = {x: Math.random(), y: Math.random()};
+      this.velocity = {x: 2*Math.random()-1, y: 2*Math.random()-1};
       this.angle = Math.random()*360;
       this.x = Math.random()*this.game.world.width;
       this.y = Math.random()*this.game.world.height;
@@ -32,11 +32,11 @@ export default class extends Phaser.Sprite {
   forceInBounds() {
     if (this.x > this.game.world.width || this.x < 0) {
       this.velocity.x *= -1;
-      this.angle += 3;
+      this.rotVelocity = 5*(2*Math.random()-1);
     }
     if (this.y > this.game.world.height || this.y < 0) {
       this.velocity.y *= -1;
-      this.angle += 3;
+      this.rotVelocity = 5*(2*Math.random()-1);
     }
   }
 
