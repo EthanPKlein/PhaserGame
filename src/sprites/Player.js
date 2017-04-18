@@ -7,6 +7,7 @@ export default class extends Phaser.Sprite {
     super(game, x, y, asset);
     this.anchor.setTo(0.5);
     this.velocity = {x: 0, y: 0};
+    this.health = 1;
   }
 
   update(delta) {
@@ -46,6 +47,23 @@ export default class extends Phaser.Sprite {
 
   fire() {
     this.game.addBullets();
+  }
+
+  isCollidingWithAnyInArray(array) {
+    for (var e of array) {
+      if (this.isCollidingWithEntity(e)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  isCollidingWithEntity(entity) {
+    var distanceToTarget = Math.sqrt((this.x - entity.x) * (this.x - entity.x) + (this.y - entity.y) * (this.y - entity.y));
+    if (distanceToTarget < 15) {
+      return true;
+    }
+    return false;
   }
 
   _handleInput(delta) {

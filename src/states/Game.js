@@ -6,7 +6,7 @@ import Space from '../environment/Space'
 import Bullet from '../sprites/Bullet'
 
 var ASTEROID_COUNT = 25;
-var NO_FIRE_COOLDOWN = .5;
+var NO_FIRE_COOLDOWN = 200;
 
 export default class extends Phaser.State {
   init() { }
@@ -31,6 +31,8 @@ export default class extends Phaser.State {
       asset: 'ship'
     });
 
+    this.fireCooldown = NO_FIRE_COOLDOWN;
+
     this.bullets = [];
     this.asteroids = [];
     for (var i = 0; i < ASTEROID_COUNT; i++) {
@@ -50,8 +52,13 @@ export default class extends Phaser.State {
   update() {
 
     //var delta = this.time.now - this.time.prevTime;
-
+    this.fireCooldown -= this.getDelta();
     this.space.update();
+
+    // damage player if they are hitting an asteroid
+    if (this.player.isCollidingWithAnyInArray(this.asteroids)) {
+      this.player.destroy();
+    }
 
     // clean up old bullets
     for (var i = 0; i < this.bullets.length; i++) {
@@ -76,6 +83,15 @@ export default class extends Phaser.State {
   
 
   addBullets() {
+
+    console.log(this.fireCooldown);
+
+    if (this.fireCooldown > 0) {
+      
+      return;
+    } else {
+      this.fireCooldown = NO_FIRE_COOLDOWN;
+    }
 
     for (var i = 0; i < 4; i++) {
       var bullet1 = new Bullet({
