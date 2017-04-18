@@ -18,7 +18,6 @@ export default class extends Phaser.State {
     game.load.audio('bullet', 'assets/audio/SoundEffects/laser.wav');
     game.load.audio('explosion', 'assets/audio/SoundEffects/explosion.wav');
     game.load.audio('music', 'assets/audio/Music/Corruption.mp3');
-
   }
 
   create() {
@@ -38,23 +37,26 @@ export default class extends Phaser.State {
 
     this.bullets = [];
     this.asteroids = [];
-    this.asteroidsGroup = game.add.physicsGroup(Phaser.Physics.ARCADE);
+
+    this.asteroidsGroup = this.game.add.group();
+    this.asteroidsGroup.enableBody = true;
+    this.asteroidsGroup.physicsBodyType = Phaser.Physics.ARCADE;
+
     for (var i = 0; i < ASTEROID_COUNT; i++) {
       var asteroid = new Asteroid({
         game: this,
-        x: this.world.centerX,
-        y: this.world.centerY,
+        x: Math.random()*this.world.width,
+        y: Math.random()*this.world.height,
         asset: 'asteroid'
       });
-
       this.asteroidsGroup.add(asteroid);
       
       this.asteroids.push(asteroid);
-      this.game.add.existing(asteroid);
-      this.game.physics.enable([asteroid], Phaser.Physics.ARCADE);
-      asteroid.body.bounce.setTo(1);
-
     }
+
+    this.asteroidsGroup.setAll('body.collideWorldBounds', true);
+    this.asteroidsGroup.setAll('body.bounce.x', 1);
+    this.asteroidsGroup.setAll('body.bounce.y', 1);
 
     this.game.add.existing(this.player);
 
