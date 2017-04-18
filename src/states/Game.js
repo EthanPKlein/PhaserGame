@@ -4,6 +4,7 @@ import Player from '../sprites/Player'
 import Asteroid from '../sprites/Asteroid'
 import Space from '../environment/Space'
 import Bullet from '../sprites/Bullet'
+import Overlay from '../UI/overlay'
 
 const ASTEROID_COUNT = 25;
 const NO_FIRE_COOLDOWN = 400;
@@ -54,15 +55,16 @@ export default class extends Phaser.State {
 
     this.game.add.existing(this.player);
 
-    var style = { font: "20px Arial", fill: "#ffffff", align: "center"};
-    this.healthText = this.game.add.text(15, 15, "Health: " + this.player.health, style);
-    this.bulletsText = this.game.add.text(200, 15, "Health: " + this.player.bullets, style);
+    this.overlay = new Overlay({
+      game: this.game,
+      player: this.player
+    });
 
   }
 
   update() {
-    this.healthText.setText("Health: " + this.player.health);
-    this.bulletsText.setText("Ammo: " + this.player.bullets);
+
+    this.overlay.update();
 
     //var delta = this.time.now - this.time.prevTime;
     this.fireCooldown -= this.getDelta();
