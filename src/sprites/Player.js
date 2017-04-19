@@ -1,7 +1,7 @@
 import Phaser from 'phaser'
 
 const PLAYER_ACCELERATION = .02;
-const STARTING_BULLETS = 30;
+const STARTING_BULLETS = 12;
 
 export default class extends Phaser.Sprite {
   constructor({ game, x, y, asset }) {
@@ -87,9 +87,20 @@ export default class extends Phaser.Sprite {
     this.bullets--;
   }
 
+  giveBullets(count) {
+    this.bullets += count;
+  }
+
   changeHealth(change) {
     this.health += change;
     if (this.health < 0) { this.health = 0;}
+  }
+
+  resetPosition() {
+    this.x = this.game.world.centerX;
+    this.y = this.game.world.centerY;
+    this.velocity.x = 0;
+    this.velocity.y = 0;
   }
 
   _handleInput(delta) {
