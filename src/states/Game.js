@@ -22,6 +22,7 @@ export default class extends Phaser.State {
     game.load.audio('damage', 'assets/audio/SoundEffects/alarm.wav');
     game.load.audio('noammo', 'assets/audio/SoundEffects/noammo.wav');
     game.load.audio('death', 'assets/audio/SoundEffects/bigboom.wav');
+    game.load.audio('victory', 'assets/audio/SoundEffects/chime.wav');
   }
 
   create() {
@@ -63,6 +64,7 @@ export default class extends Phaser.State {
     this.sfxDamage = game.add.audio('damage');
     this.sfxNoAmmo = game.add.audio('noammo');
     this.sfxDeath = game.add.audio('death');
+    this.sfxVictory = game.add.audio('victory');
     this.music = game.add.audio('music');
     this.music.loopFull(1);
 
@@ -80,11 +82,11 @@ export default class extends Phaser.State {
     // damage player if they are hitting an asteroid
     if (!this.player.isInvulnerable() && this.player.isCollidingWithAnyInArray(this.asteroids) && this.player.health > 0) {
       this.player.changeHealth(-1);
-      this.sfxDamage.play();
       if (this.player.health <= 0) {
         this.player.destroy();
         this.sfxDeath.play();
       } else {
+        this.sfxDamage.play();
         this.player.setInvulnerable(INVULNERABLE_AFTER_DAMAGE_COOLDOWN);
       }
 
@@ -184,6 +186,9 @@ export default class extends Phaser.State {
   }
 
   startWave(wave) {
+    if (this.waveNumber > 0) {
+      this.sfxVictory.play();
+    }
     this.waveNumber++;
     this.player.resetPosition();
     this.player.setInvulnerable(INVULNERABLE_AFTER_DAMAGE_COOLDOWN*2);;
