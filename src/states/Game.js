@@ -10,7 +10,7 @@ const ASTEROID_COUNT = 25;
 const NO_FIRE_COOLDOWN = 400;
 const INVULNERABLE_AFTER_DAMAGE_COOLDOWN = 2000;
 const STARTING_BULLETS = 100;
-const STARTING_TIMER = 30;
+const STARTING_TIMER = 15000;
 
 export default class extends Phaser.State {
   init() { }
@@ -43,6 +43,7 @@ export default class extends Phaser.State {
     this.fireCooldown = NO_FIRE_COOLDOWN;
     this.playerScore = 0;
     this.waveNumber = 0;
+    this.gameTimer = STARTING_TIMER;
 
     this.bullets = [];
     this.asteroids = [];
@@ -74,18 +75,28 @@ export default class extends Phaser.State {
 
     this.game.physics.arcade.collide(this.asteroidsGroup);
 
-    this.overlay.update(this.waveNumber);
+    this.overlay.update(this.waveNumber, this.gameTimer);
 
     this.fireCooldown -= this.getDelta();
+
+    if (this.player.isAlive()) {
+      this.gameTimer -= this.getDelta();
+    }
+
+    // if game time is out, destroy player
+    if (this.player.isAlive() && this.gameTimer <= 0) {
+      this.player.changeHealth(-999);
+      this.endGame();
+    }
+
     this.space.update();
 
     // damage player if they are hitting an asteroid
-    if (!this.player.isInvulnerable() && this.player.isCollidingWithAnyInArray(this.asteroids) && this.player.health > 0) {
+    if (!this.player.isInvulnerable() && this.player.isCollidingWithAnyInArray(this.asteroids) && this.player.isAlive() > 0) {
       this.player.changeHealth(-1);
-      if (this.player.health <= 0) {
-        this.player.destroy();
-        this.sfxDeath.play();
-      } else {
+      if (!this.player.isAlive()) {
+        this.endGame();
+      } else if (this.player.isAlive()){
         this.sfxDamage.play();
         this.player.setInvulnerable(INVULNERABLE_AFTER_DAMAGE_COOLDOWN);
       }
@@ -190,10 +201,16 @@ export default class extends Phaser.State {
       this.sfxVictory.play();
     }
     this.waveNumber++;
+    this.gameTimer = 20000 + 10000*(this.waveNumber-1);
     this.player.resetPosition();
     this.player.setInvulnerable(INVULNERABLE_AFTER_DAMAGE_COOLDOWN*2);;
-    this.player.giveBullets(this.waveNumber + 5);
+    this.player.giveBullets(10+(this.waveNumber-1)*3);
     this.spawnAsteroids(this.waveNumber * 7);
+  }
+
+  endGame() {
+    this.player.destroy();
+    this.sfxDeath.play();
   }
 
   render() {

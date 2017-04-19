@@ -11,7 +11,7 @@ export default class extends Phaser.Sprite {
     this.health = 3;
     this.invulerableTimer = 4000;
     this.alpha = .5;
-    this.bullets = STARTING_BULLETS;
+    this.bullets = 0;
     this.score = 0;
   }
 
@@ -101,6 +101,10 @@ export default class extends Phaser.Sprite {
     this.y = this.game.world.centerY;
     this.velocity.x = 0;
     this.velocity.y = 0;
+  }
+
+  isAlive() {
+    return this.health > 0;
   }
 
   _handleInput(delta) {
