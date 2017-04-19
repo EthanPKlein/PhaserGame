@@ -14,9 +14,10 @@ export default class {
         this.currentWaveText = this.game.add.text(550, 15, "Wave: " + this.currentWave, style);
         this.gameTimerText = this.game.add.text(15, 580, "Time: ", style);
         this.youDiedText = this.game.add.text(200, this.game.world.centerY-40, "", deathText);
+        this.getReadyText = this.game.add.text(350, this.game.world.centerY-20, "Get ready!", style);
     }
 
-    update(waveNumber, gameTimer) {
+    update(waveNumber, gameTimer, inbetweenWave) {
         this.healthText.setText("Health: " + this.player.health);
         this.bulletsText.setText("Ammo: " + this.player.bullets);
         this.scoreText.setText("Score: " + this.player.score);
@@ -33,6 +34,17 @@ export default class {
         }
         if (timer === 0) {
             this.youDiedText.setText("OUT OF TIME");
+        }
+
+        if (inbetweenWave === true) {
+            if (waveNumber <= 0) {
+                this.getReadyText.setText("Get ready!");
+            } else {
+                this.getReadyText.setText("Congratulations!\nNow get ready!");
+            }
+            
+        } else {
+            this.getReadyText.setText(""); // TODO:  hide this?
         }
     }
 }

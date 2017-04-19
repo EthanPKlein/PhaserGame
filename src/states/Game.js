@@ -44,6 +44,7 @@ export default class extends Phaser.State {
     this.playerScore = 0;
     this.waveNumber = 0;
     this.gameTimer = STARTING_TIMER;
+    this.inbetweenWave = false;
 
     this.bullets = [];
     this.asteroids = [];
@@ -75,11 +76,11 @@ export default class extends Phaser.State {
 
     this.game.physics.arcade.collide(this.asteroidsGroup);
 
-    this.overlay.update(this.waveNumber, this.gameTimer);
+    this.overlay.update(this.waveNumber, this.gameTimer, this.inbetweenWave);
 
     this.fireCooldown -= this.getDelta();
 
-    if (this.player.isAlive()) {
+    if (this.player.isAlive() && !this.inbetweenWave) {
       this.gameTimer -= this.getDelta();
     }
 
@@ -127,7 +128,10 @@ export default class extends Phaser.State {
     }
 
     if (this.waveComplete()) {
-      this.startWave();
+      this.game.time.events.add(3000, function() {
+        this.startWave();
+      }, this);
+      
     }
 
   }
@@ -190,13 +194,15 @@ export default class extends Phaser.State {
   }
 
   waveComplete() {
-    if (this.asteroidsGroup.countLiving() === 0) {
+    if (this.inbetweenWave === false && this.asteroidsGroup.countLiving() === 0) {
+      this.inbetweenWave = true;
       return true;
     }
     return false;
   }
 
   startWave(wave) {
+    this.inbetweenWave = false;
     if (this.waveNumber > 0) {
       this.sfxVictory.play();
     }
