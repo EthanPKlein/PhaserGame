@@ -17,6 +17,8 @@ export default class extends Phaser.State {
     this.load.image('asteroid', 'assets/images/asteroid.png');
     this.load.image('space', 'assets/images/space.png');
     this.load.image('bullet', 'assets/images/bullet.png');
+    this.load.image('comet_1', 'assets/images/comet_1.png');
+    this.load.image('comet_0', 'assets/images/comet_0.png');
   }
 
   create () {

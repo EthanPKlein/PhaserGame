@@ -5,6 +5,7 @@ import Asteroid from '../sprites/Asteroid'
 import Space from '../environment/Space'
 import Bullet from '../sprites/Bullet'
 import Overlay from '../UI/overlay'
+import AsteroidDefinitions from '../definitions/asteroidDefinitions'
 
 const ASTEROID_COUNT = 25;
 const NO_FIRE_COOLDOWN = 400;
@@ -110,14 +111,18 @@ export default class extends Phaser.State {
       var destroyBullet = false;
       b.update();
 
+      // damage or destroy and asteroids this bullet is in contact with
       for (var j = 0; j < this.asteroids.length; j++) {
         var asteroid = this.asteroids[j];
         if (b.isCollidingWithEntity(asteroid)) {
-          this.asteroids.splice(j, 1);
-          asteroid.destroy();
           destroyBullet = true;
+          asteroid.damage(1);
           this.sfxExplosion.play();
-          this.player.score += 100;
+          if (asteroid.hp <= 0) {
+            this.asteroids.splice(j, 1);
+            asteroid.destroy();
+            this.player.score += 100;
+          }
         }
       }
 
@@ -136,13 +141,28 @@ export default class extends Phaser.State {
 
   }
 
+  getRandomAsteroidType() {
+    var type = 'asteroid';
+    var roll = Math.random()*(this.waveNumber);
+
+    if (roll < 1) {
+      return 'asteroid';
+    } else if (roll < 2) {
+      return 'comet';
+    }
+
+    return type;
+
+  }
+
   spawnAsteroids(count) {
     for (var i = 0; i < count; i++) {
       var asteroid = new Asteroid({
         game: this,
         x: Math.random()*this.world.width,
         y: Math.random()*this.world.height,
-        asset: 'asteroid'
+        asset: 'asteroid',
+        type: this.getRandomAsteroidType()
       });
       this.asteroidsGroup.add(asteroid);
       
