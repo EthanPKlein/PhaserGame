@@ -94,6 +94,7 @@ export default class extends Phaser.Sprite {
   changeHealth(change) {
     this.health += change;
     if (this.health < 0) { this.health = 0;}
+    else if (this.health > 5) { this.health = 5; }
   }
 
   resetPosition() {

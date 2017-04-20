@@ -2,57 +2,59 @@
 var definitions = [
 
     {
-        asteroid: 3,
-        ammoPickup: 1, bigAmmoPickup: 1, bigHealth: 1
+        enemies: { asteroid: 3 },
+        pickups: { ammo: 1, bigTime: 1 }
     },
 
     {
-        asteroid: 7,
-        ammoPickup: 1
+        enemies: { asteroid: 7, },
+        pickups: { ammo: 1, time: 1 }
     },
 
     {
-        asteroid: 12, comet: 2,
-        ammoPickup: 2
+        enemies: { asteroid: 12, comet: 2, },
+        pickups: { ammo: 2, time: 1 }
     },
 
     {
-        asteroid: 15, comet: 5,
-        ammoPickup: 2
+        enemies: { asteroid: 15, comet: 5, },
+        pickups: { ammo: 2, health: 1, time: 2 }
     },
 
     {
-        asteroid: 15, comet: 8, iron: 2,
-        ammoPickup: 3
+        enemies: { asteroid: 15, comet: 8, iron: 2, },
+        pickups: { ammo: 1, bigAmmo: 1, time: 2 }
     },
 
     {
-        asteroid: 12, comet: 12, iron: 5,
-        ammoPickup: 4
+        enemies: { asteroid: 12, comet: 12, iron: 5, },
+        pickups: { ammo: 2, bigAmmo: 1, health: 2, time: 3 }
     },
 
     {
-        asteroid: 9, comet: 15, iron: 6, ship: 1,
-        ammoPickup: 4
+        enemies: { asteroid: 9, comet: 15, iron: 6, alien: 1, },
+        pickups: { bigAmmo: 3, bigTime: 2 }
     },
 
     {
-        asteroid: 3, comet: 23, iron: 14, ship: 2,
-        ammoPickup: 5
+        enemies: { asteroid: 3, comet: 23, iron: 14, alien: 2, },
+        pickups: { bigAmmo: 3, bigHealth: 2, time: 2, bigTime: 2  }
     },
 
     {
-        comet: 30, iron: 20, ship: 3,
-        ammoPickup: 5
+        enemies: { comet: 30, iron: 20, alien: 3, },
+        pickups: { bigAmmo: 2, health: 3, time: 4 }
     },
 
     {
-        comet: 25, iron: 30, ship: 4,
-        ammoPickup: 5
+        enemies: { comet: 25, iron: 30, alien: 4, },
+        pickups: { bigAmmo: 2, time: 2, bigTime: 2 }
     },
 
-
-    { ship: 99 },
+    {
+        enemies: { alien: 99 },
+        pickups: {}
+    },
 ];
 
 export default definitions;

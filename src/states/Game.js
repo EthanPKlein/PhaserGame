@@ -13,7 +13,7 @@ const ASTEROID_COUNT = 25;
 const NO_FIRE_COOLDOWN = 400;
 const INVULNERABLE_AFTER_DAMAGE_COOLDOWN = 2000;
 const STARTING_BULLETS = 100;
-const STARTING_TIMER = 15000;
+const STARTING_TIMER = 5000;
 
 export default class extends Phaser.State {
   init() { }
@@ -182,19 +182,11 @@ export default class extends Phaser.State {
 
   spawnAsteroids() {
 
-    var levelDefinition = LevelDefinitions[this.waveNumber-1];
-
-    for (var i = 0; i < levelDefinition.asteroid; i++) {
-      this.spawnObject('asteroid');
-    }
-    for (var i = 0; i < levelDefinition.comet; i++) {
-      this.spawnObject('comet');
-    }
-    for (var i = 0; i < levelDefinition.iron; i++) {
-      this.spawnObject('iron');
-    }
-    for (var i = 0; i < levelDefinition.alien; i++) {
-      this.spawnObject('alien');
+   var levelDefinition = LevelDefinitions[this.waveNumber - 1].enemies;
+    for (var key in levelDefinition) {
+      for (var i = 0; i < levelDefinition[key]; i++) {
+        this.spawnObject(key);
+      }
     }
 
     this.asteroidsGroup.enableBody = true;
@@ -217,20 +209,11 @@ export default class extends Phaser.State {
   }
 
   spawnPickups() {
-
-    var levelDefinition = LevelDefinitions[this.waveNumber-1];
-
-    for (var i = 0; i < levelDefinition.ammoPickup; i++) {
-      this.spawnPickup('ammo');
-    }
-    for (var i = 0; i < levelDefinition.bigAmmoPickup; i++) {
-      this.spawnPickup('bigammo');
-    }
-    for (var i = 0; i < levelDefinition.health; i++) {
-      this.spawnPickup('health');
-    }
-    for (var i = 0; i < levelDefinition.bigHealth; i++) {
-      this.spawnPickup('bigHealth');
+    var levelDefinition = LevelDefinitions[this.waveNumber - 1].pickups;
+    for (var key in levelDefinition) {
+      for (var i = 0; i < levelDefinition[key]; i++) {
+        this.spawnPickup(key);
+      }
     }
   }
 
@@ -284,7 +267,7 @@ export default class extends Phaser.State {
       this.sfxVictory.play();
     }
     this.waveNumber++;
-    this.gameTimer = 20000 + 10000*(this.waveNumber-1);
+    this.gameTimer += 20000;
     this.player.resetPosition();
     this.player.setInvulnerable(INVULNERABLE_AFTER_DAMAGE_COOLDOWN*2);;
     this.player.giveBullets(10);
@@ -300,6 +283,10 @@ export default class extends Phaser.State {
   endGame() {
     this.player.destroy();
     this.sfxDeath.play();
+  }
+
+  getRandomPositionNotNearPlayer() {
+    
   }
 
   render() {

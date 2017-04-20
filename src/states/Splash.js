@@ -31,9 +31,11 @@ export default class extends Phaser.State {
     this.load.image('ship_0', 'assets/images/ship_0.png');
 
     this.load.image('ammo', 'assets/images/ammo.png');
-    this.load.image('bigammo', 'assets/images/ammo_big.png');
+    this.load.image('bigAmmo', 'assets/images/ammo_big.png');
     this.load.image('health', 'assets/images/health.png');
     this.load.image('bigHealth', 'assets/images/bighealth.png');
+    this.load.image('time', 'assets/images/time.png');
+    this.load.image('bigTime', 'assets/images/bigtime.png');
   }
 
   create () {
