@@ -6,6 +6,7 @@ import Space from '../environment/Space'
 import Bullet from '../sprites/Bullet'
 import Overlay from '../UI/overlay'
 import AsteroidDefinitions from '../definitions/asteroidDefinitions'
+import LevelDefinitions from '../definitions/levelDefintions'
 
 const ASTEROID_COUNT = 25;
 const NO_FIRE_COOLDOWN = 400;
@@ -149,24 +150,42 @@ export default class extends Phaser.State {
       return 'asteroid';
     } else if (roll < 2) {
       return 'comet';
+    } else if (roll < 3) {
+      return 'iron';
     }
 
     return type;
 
   }
 
-  spawnAsteroids(count) {
-    for (var i = 0; i < count; i++) {
-      var asteroid = new Asteroid({
+  spawnObject(type) {
+    var asteroid = new Asteroid({
         game: this,
         x: Math.random()*this.world.width,
         y: Math.random()*this.world.height,
         asset: 'asteroid',
-        type: this.getRandomAsteroidType()
+        type: type
       });
       this.asteroidsGroup.add(asteroid);
-      
       this.asteroids.push(asteroid);
+  }
+
+  spawnAsteroids(count) {
+
+    var levelDefinition = LevelDefinitions[this.waveNumber-1];
+    console.log(levelDefinition);
+
+    for (var i = 0; i < levelDefinition.asteroid; i++) {
+      this.spawnObject('asteroid');
+    }
+    for (var i = 0; i < levelDefinition.comet; i++) {
+      this.spawnObject('comet');
+    }
+    for (var i = 0; i < levelDefinition.iron; i++) {
+      this.spawnObject('iron');
+    }
+    for (var i = 0; i < levelDefinition.alien; i++) {
+      this.spawnObject('alien');
     }
 
     this.asteroidsGroup.enableBody = true;
