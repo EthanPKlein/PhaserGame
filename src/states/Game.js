@@ -223,6 +223,15 @@ export default class extends Phaser.State {
     for (var i = 0; i < levelDefinition.ammoPickup; i++) {
       this.spawnPickup('ammo');
     }
+    for (var i = 0; i < levelDefinition.bigAmmoPickup; i++) {
+      this.spawnPickup('bigammo');
+    }
+    for (var i = 0; i < levelDefinition.health; i++) {
+      this.spawnPickup('health');
+    }
+    for (var i = 0; i < levelDefinition.bigHealth; i++) {
+      this.spawnPickup('bigHealth');
+    }
   }
 
   addBullets() {

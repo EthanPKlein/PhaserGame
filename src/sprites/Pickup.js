@@ -23,6 +23,15 @@ export default class extends Phaser.Sprite {
       if (this.type==='ammo') {
           this.game.player.bullets += 5;
           this.game.sfxReload.play();
+      } else if (this.type==='bigammo') {
+          this.game.player.bullets += 10;
+          this.game.sfxReload.play();
+      } else if (this.type==='health') {
+          this.game.player.health += 1;
+          this.game.sfxPowerup.play();
+      } else if (this.type==='bigHealth') {
+          this.game.player.health += 2;
+          this.game.sfxPowerup.play();
       }
   }
 

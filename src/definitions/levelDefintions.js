@@ -3,7 +3,7 @@ var definitions = [
 
     {
         asteroid: 3,
-        ammoPickup: 1
+        ammoPickup: 1, bigAmmoPickup: 1, bigHealth: 1
     },
 
     {
