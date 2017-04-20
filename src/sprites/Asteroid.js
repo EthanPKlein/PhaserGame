@@ -40,8 +40,8 @@ export default class extends Phaser.Sprite {
     this.drawDamageParticles();
 
     if (this.type==="bouncy") {
-      this.body.velocity.x = 12 - (6 * Math.random());
-      this.body.velocity.y = 12 - (6 * Math.random());
+      this.body.velocity.x = 6 - (12 * Math.random());
+      this.body.velocity.y = 6 - (12 * Math.random());
     }
 
   }
