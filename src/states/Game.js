@@ -4,6 +4,7 @@ import Player from '../sprites/Player'
 import Asteroid from '../sprites/Asteroid'
 import Space from '../environment/Space'
 import Bullet from '../sprites/Bullet'
+import Pickup from '../sprites/Pickup'
 import Overlay from '../UI/overlay'
 import AsteroidDefinitions from '../definitions/asteroidDefinitions'
 import LevelDefinitions from '../definitions/levelDefintions'
@@ -41,6 +42,7 @@ export default class extends Phaser.State {
     });
 
     this.player.resetPosition();
+    this.game.add.existing(this.player);
 
     this.fireCooldown = NO_FIRE_COOLDOWN;
     this.playerScore = 0;
@@ -50,11 +52,9 @@ export default class extends Phaser.State {
 
     this.bullets = [];
     this.asteroids = [];
+    this.pickups = [];
 
     this.asteroidsGroup = this.game.add.group();
-    
-
-    this.game.add.existing(this.player);
 
     this.overlay = new Overlay({
       game: this.game,
@@ -103,7 +103,16 @@ export default class extends Phaser.State {
         this.sfxDamage.play();
         this.player.setInvulnerable(INVULNERABLE_AFTER_DAMAGE_COOLDOWN);
       }
+    }
 
+    // assign pickup bonuses if player is close enough
+    for (var i = 0; i < this.pickups.length; i++) {
+      var pickup = this.pickups[i];
+      if (pickup.isCollidingWithEntity(this.player)) {
+        this.player.bullets += 5;
+        pickup.destroy();
+        this.pickups.splice(i, 1);
+      }
     }
 
     // clean up old bullets
@@ -127,6 +136,16 @@ export default class extends Phaser.State {
         }
       }
 
+      // destroy any pickups this bullet is in contact with
+      for (var j = 0; j < this.pickups.length; j++) {
+        var pickup = this.pickups[j];
+        if (pickup.isCollidingWithEntity(b)) {
+          destroyBullet = true;
+          this.pickups.splice(j, 1);
+          pickup.destroy();
+        }
+      }
+
       if (b.isOutOfBounds() || destroyBullet) {
         this.bullets.splice(i, 1);
         b.destroy();
@@ -142,22 +161,6 @@ export default class extends Phaser.State {
 
   }
 
-  getRandomAsteroidType() {
-    var type = 'asteroid';
-    var roll = Math.random()*(this.waveNumber);
-
-    if (roll < 1) {
-      return 'asteroid';
-    } else if (roll < 2) {
-      return 'comet';
-    } else if (roll < 3) {
-      return 'iron';
-    }
-
-    return type;
-
-  }
-
   spawnObject(type) {
     var asteroid = new Asteroid({
         game: this,
@@ -170,10 +173,9 @@ export default class extends Phaser.State {
       this.asteroids.push(asteroid);
   }
 
-  spawnAsteroids(count) {
+  spawnAsteroids() {
 
     var levelDefinition = LevelDefinitions[this.waveNumber-1];
-    console.log(levelDefinition);
 
     for (var i = 0; i < levelDefinition.asteroid; i++) {
       this.spawnObject('asteroid');
@@ -194,6 +196,26 @@ export default class extends Phaser.State {
     this.asteroidsGroup.setAll('body.bounce.x', 1);
     this.asteroidsGroup.setAll('body.bounce.y', 1);
 
+  }
+
+  spawnPickup(type) {
+    var pickup = new Pickup({
+      game: this,
+      x: Math.random() * this.world.width,
+      y: Math.random() * this.world.height,
+      asset: type
+    });
+    game.add.existing(pickup);
+    this.pickups.push(pickup);
+  }
+
+  spawnPickups() {
+
+    var levelDefinition = LevelDefinitions[this.waveNumber-1];
+
+    for (var i = 0; i < levelDefinition.ammoPickup; i++) {
+      this.spawnPickup('ammo');
+    }
   }
 
   addBullets() {
@@ -249,8 +271,14 @@ export default class extends Phaser.State {
     this.gameTimer = 20000 + 10000*(this.waveNumber-1);
     this.player.resetPosition();
     this.player.setInvulnerable(INVULNERABLE_AFTER_DAMAGE_COOLDOWN*2);;
-    this.player.giveBullets(10+(this.waveNumber-1)*3);
-    this.spawnAsteroids(this.waveNumber * 7);
+    this.player.giveBullets(10);
+    this.spawnAsteroids();
+
+    for (var pickup of this.pickups) {
+      pickup.destroy();
+    }
+    this.pickups = [];
+    this.spawnPickups();
   }
 
   endGame() {
