@@ -1,7 +1,10 @@
 
 var definitions = [
 
-    { asteroid: 3 },
+    {
+        asteroid: 3,
+        ammoPickup: 1
+    },
 
     {
         asteroid: 7,

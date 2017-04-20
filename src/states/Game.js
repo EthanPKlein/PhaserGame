@@ -26,6 +26,9 @@ export default class extends Phaser.State {
     game.load.audio('noammo', 'assets/audio/SoundEffects/noammo.wav');
     game.load.audio('death', 'assets/audio/SoundEffects/bigboom.wav');
     game.load.audio('victory', 'assets/audio/SoundEffects/chime.wav');
+    game.load.audio('reload', 'assets/audio/SoundEffects/reload.mp3');
+    game.load.audio('powerup', 'assets/audio/SoundEffects/powerup.wav');
+    game.load.audio('powerdown', 'assets/audio/SoundEffects/powerdown.wav');
   }
 
   create() {
@@ -69,6 +72,9 @@ export default class extends Phaser.State {
     this.sfxNoAmmo = game.add.audio('noammo');
     this.sfxDeath = game.add.audio('death');
     this.sfxVictory = game.add.audio('victory');
+    this.sfxReload = game.add.audio('reload');
+    this.sfxPowerup = game.add.audio('powerup');
+    this.sfxPowerdown = game.add.audio('powerdown');
     this.music = game.add.audio('music');
     this.music.loopFull(1);
 
@@ -109,7 +115,7 @@ export default class extends Phaser.State {
     for (var i = 0; i < this.pickups.length; i++) {
       var pickup = this.pickups[i];
       if (pickup.isCollidingWithEntity(this.player)) {
-        this.player.bullets += 5;
+        pickup.applyPowerup();
         pickup.destroy();
         this.pickups.splice(i, 1);
       }
@@ -143,6 +149,7 @@ export default class extends Phaser.State {
           destroyBullet = true;
           this.pickups.splice(j, 1);
           pickup.destroy();
+          this.sfxPowerdown.play();
         }
       }
 

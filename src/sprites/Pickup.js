@@ -4,7 +4,7 @@ export default class extends Phaser.Sprite {
   constructor({ game, x, y, asset, type }) {
     super(game, x, y, asset);
     this.anchor.setTo(0.5, 0.5);
-    this.type = type;
+    this.type = asset;
   }
 
   update() {
@@ -17,6 +17,13 @@ export default class extends Phaser.Sprite {
       return true;
     }
     return false;
+  }
+
+  applyPowerup() {
+      if (this.type==='ammo') {
+          this.game.player.bullets += 5;
+          this.game.sfxReload.play();
+      }
   }
 
 }
