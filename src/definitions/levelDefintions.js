@@ -3,7 +3,7 @@ var definitions = [
 
     {
         enemies: { asteroid: 3 },
-        pickups: { ammo: 1, bigTime: 1 }
+        pickups: { ammo: 1 }
     },
 
     {

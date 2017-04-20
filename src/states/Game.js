@@ -169,10 +169,11 @@ export default class extends Phaser.State {
   }
 
   spawnObject(type) {
+    var location = this.getRandomPositionNotNearPlayer();
     var asteroid = new Asteroid({
         game: this,
-        x: Math.random()*this.world.width,
-        y: Math.random()*this.world.height,
+        x: location.x,
+        y: location.y,
         asset: 'asteroid',
         type: type
       });
@@ -286,7 +287,15 @@ export default class extends Phaser.State {
   }
 
   getRandomPositionNotNearPlayer() {
-    
+    var distance = 0;
+    var output = {x: 0, y: 0};
+    while (distance < 150) {
+      output.x = Math.random() * this.world.width;
+      output.y = Math.random() * this.world.height;
+      distance = Math.sqrt((output.x - this.player.x) * (output.x - this.player.x) +
+        (output.y - this.player.y) * (output.y - this.player.y));
+    }
+    return output;
   }
 
   render() {
