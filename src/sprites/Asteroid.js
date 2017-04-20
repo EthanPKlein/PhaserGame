@@ -37,7 +37,31 @@ export default class extends Phaser.Sprite {
   damage(amount) {
     this.hp -= amount;
     this.redraw();
+    this.drawDamageParticles();
+
+    if (this.type==="bouncy") {
+      this.body.velocity.x = 12 - (6 * Math.random());
+      this.body.velocity.y = 12 - (6 * Math.random());
+    }
+
   }
+
+  drawDamageParticles() {
+    var particleCount = 3;
+    if (this.hp === 0) {
+      particleCount = 25;
+    }
+
+    this.game.particleEmitter.x = this.body.x + this.body.width / 2;
+    this.game.particleEmitter.y = this.body.y + this.body.height / 2;
+    this.game.particleEmitter.start(true, 1500, null, particleCount);
+
+    // disable gravity on each particle... TODO, must be a better way to do this
+    this.game.particleEmitter.forEach(function (particle) {
+      particle.body.allowGravity = false;
+    }, this);
+  }
+
 
   redraw() {
     var newSprite = AsteroidDefinitions[this.type].sprites[this.hp - 1];

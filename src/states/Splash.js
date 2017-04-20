@@ -29,6 +29,8 @@ export default class extends Phaser.State {
     this.load.image('ship_2', 'assets/images/ship_2.png');
     this.load.image('ship_1', 'assets/images/ship_1.png');
     this.load.image('ship_0', 'assets/images/ship_0.png');
+    this.load.image('bouncy_0', 'assets/images/bouncy_0.png');
+    this.load.image('bouncy_1', 'assets/images/bouncy_1.png');
 
     this.load.image('ammo', 'assets/images/ammo.png');
     this.load.image('bigAmmo', 'assets/images/ammo_big.png');
@@ -36,6 +38,11 @@ export default class extends Phaser.State {
     this.load.image('bigHealth', 'assets/images/bighealth.png');
     this.load.image('time', 'assets/images/time.png');
     this.load.image('bigTime', 'assets/images/bigtime.png');
+
+    this.load.image('fireParticle', 'assets/images/fire.png');
+    this.load.image('asteroidParticle', 'assets/images/asteroid_particle.png');
+    this.load.image('cometParticle', 'assets/images/comet_particle.png');
+
   }
 
   create () {

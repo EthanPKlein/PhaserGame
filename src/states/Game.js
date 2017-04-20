@@ -78,6 +78,15 @@ export default class extends Phaser.State {
     this.music = game.add.audio('music');
     this.music.loopFull(1);
 
+    // particles
+    this.particleEmitter = game.add.emitter(0, 0, 300);
+    this.particleEmitter.makeParticles('asteroidParticle');
+    this.particleEmitter.minParticleSpeed.setTo(-100, -100);
+    this.particleEmitter.maxParticleSpeed.setTo(100, 100);
+    this.fireParticleEmitter = game.add.emitter(0, 0, 300);
+    this.fireParticleEmitter.makeParticles('fireParticle');
+    this.fireParticleEmitter.minParticleSpeed.setTo(0, 0);
+    this.fireParticleEmitter.maxParticleSpeed.setTo(0, 0);
   }
 
   update() {

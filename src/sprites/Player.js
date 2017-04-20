@@ -123,16 +123,22 @@ export default class extends Phaser.Sprite {
       space: this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR),
     };
 
+    var enginesOn = false;
+
     if (wasd.up.isDown) {
+      enginesOn = true;
       this.velocity.y += -PLAYER_ACCELERATION;
     }
     if (wasd.down.isDown) {
+      enginesOn = true;
       this.velocity.y += PLAYER_ACCELERATION;
     }
     if (wasd.right.isDown) {
+      enginesOn = true;
       this.velocity.x += PLAYER_ACCELERATION;
     }
     if (wasd.left.isDown) {
+      enginesOn = true;
       this.velocity.x += -PLAYER_ACCELERATION;
     }
     if (wasd.rotRight.isDown) {
@@ -142,10 +148,21 @@ export default class extends Phaser.Sprite {
       //this.angle += -2;
     }
     if (wasd.lshift.isDown) {
+      enginesOn = true;
       this.decelerate();
     }
     if (wasd.space.isDown) {
       this.fire();
+    }
+
+    if (enginesOn) {
+      this.game.fireParticleEmitter.x = this.x;
+      this.game.fireParticleEmitter.y = this.y;
+      this.game.fireParticleEmitter.start(true, 300, null, 1);
+      // disable gravity on each particle... TODO, must be a better way to do this
+      this.game.fireParticleEmitter.forEach(function (particle) {
+        particle.body.allowGravity = false;
+      }, this);
     }
 
   }
