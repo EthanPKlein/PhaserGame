@@ -14,6 +14,8 @@ export default class extends Phaser.State {
     // load your assets
     //
     this.load.image('ship', 'assets/images/ship.png');
+    this.load.image('shipShield', 'assets/images/ship_shielded.png');
+
     this.load.image('asteroid', 'assets/images/asteroid.png');
     this.load.image('space', 'assets/images/space.png');
     this.load.image('bullet', 'assets/images/bullet.png');

@@ -10,7 +10,7 @@ export default class extends Phaser.Sprite {
     this.velocity = {x: 0, y: 0};
     this.health = 3;
     this.invulerableTimer = 4000;
-    this.alpha = .5;
+    this.alpha = 1;
     this.bullets = 0;
     this.score = 0;
   }
@@ -23,6 +23,7 @@ export default class extends Phaser.Sprite {
     if (this.invulerableTimer < 0) {
       this.invulerableTimer = 0;
     }
+    this.redraw();
   }
 
   move() {
@@ -74,11 +75,6 @@ export default class extends Phaser.Sprite {
   }
 
   isInvulnerable() {
-    if (this.invulerableTimer > 0) {
-      this.alpha = .3;
-    } else {
-      this.alpha = 1;
-    }
     return this.invulerableTimer > 0;
   }
 
@@ -105,6 +101,15 @@ export default class extends Phaser.Sprite {
     this.y = this.game.world.centerY;
     this.velocity.x = 0;
     this.velocity.y = 0;
+  }
+
+  redraw() {
+    if (this.invulerableTimer > 0) {
+      this.loadTexture('shipShield');
+    } else {
+      this.loadTexture('ship');
+    }
+    
   }
 
   isAlive() {
