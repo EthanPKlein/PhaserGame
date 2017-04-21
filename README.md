@@ -1,46 +1,16 @@
-# Phaser + ES6 + Webpack.
-#### A bootstrap project to create games with Phaser + ES6 + Webpack.
+###Blow Up Space Rocks for Fun and Profit###
 
-![Phaser+ES6+Webpack](https://raw.githubusercontent.com/lean/phaser-es6-webpack/master/assets/images/phaser-es6-webpack.jpg)
+Movement:
+- WASD to move your spaceship
+- LeftShift to reduce velocity to 0
+- Spacebar to fire
 
-[![js-standard-style](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
+Objective:
+Destroy all the space rocks.  Be careful not to run out of time or ammunition.  There will be pickups available for you to collect -- just be careful not to destroy them first!
 
-
-## Features
-- ESLINT with JavaScript Standard Style configuration
-- Next generation of Javascript
-- Webpack ready
-- Multiple browser testing
-- WebFont Loader
-
-
-# Setup
-To use this bootstrap you’ll need to install a few things before you have a working copy of the project.
-
-## 1. Clone this repo:
-
-Navigate into your workspace directory.
-
-Run:
-
-```git clone https://github.com/lean/phaser-es6-webpack.git```
-
-## 2. Install node.js and npm:
-
-https://nodejs.org/en/
-
-
-## 3. Install dependencies (optionally you could install [yarn](https://yarnpkg.com/)):
-
-Navigate to the cloned repo’s directory.
-
-Run:
+Install:
 
 ```npm install``` 
-
-or if you choose yarn, just run ```yarn```
-
-## 4. Run the development server:
 
 Run:
 
@@ -50,9 +20,6 @@ This will run a server so you can run the game in a browser.
 
 Open your browser and enter localhost:3000 into the address bar.
 
-Also this will start a watch process, so you can change the source and the process will recompile and refresh the browser
-
-
 ## Build for deployment:
 
 Run:
@@ -61,9 +28,11 @@ Run:
 
 This will optimize and minimize the compiled bundle.
 
-## Credits
-Big thanks to this great repos:
+Credits:
+SFX from https://freesound.org
 
-https://github.com/belohlavek/phaser-es6-boilerplate
-
-https://github.com/cstuncsik/phaser-es6-demo
+Music:
+"Corruption"
+Kevin MacLeod (incompetech.com)
+Licensed under Creative Commons: By Attribution 3.0
+http://creativecommons.org/licenses/by/3.0/
