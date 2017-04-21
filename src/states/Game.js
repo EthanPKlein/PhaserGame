@@ -141,12 +141,12 @@ export default class extends Phaser.State {
         var asteroid = this.asteroids[j];
         if (b.isCollidingWithEntity(asteroid)) {
           destroyBullet = true;
-          asteroid.damage(1);
+          asteroid.damage(b.getDamage());
           this.sfxExplosion.play();
           if (asteroid.hp <= 0) {
             this.asteroids.splice(j, 1);
             asteroid.destroy();
-            this.player.score += 100;
+            this.player.score += asteroid.getProfitValue();
           }
         }
       }
@@ -240,12 +240,18 @@ export default class extends Phaser.State {
       this.sfxBullet.play();
     }
 
+    var ammotype = "regular";
+    if (this.player.hasPowerup()) {
+      ammotype = "strong";
+    }
+
     for (var i = 0; i < 4; i++) {
       var bullet1 = new Bullet({
         game: this,
         x: this.player.x,
         y: this.player.y,
-        asset: 'bullet'
+        asset: 'bullet',
+        type: ammotype
       });
 
       if (i===0) {

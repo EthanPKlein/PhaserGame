@@ -62,6 +62,10 @@ export default class extends Phaser.Sprite {
     }, this);
   }
 
+  getProfitValue() {
+    return AsteroidDefinitions[this.type].money;
+  }
+
 
   redraw() {
     var newSprite = AsteroidDefinitions[this.type].sprites[this.hp - 1];

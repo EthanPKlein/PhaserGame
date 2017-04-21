@@ -45,13 +45,19 @@ export default class extends Phaser.Sprite {
           this.game.sfxPowerup.play();
       } 
       else if (this.type==='shield') {
-          console.log(this.game.player.invulerableTimer);
           this.game.player.invulerableTimer += 5000;
           this.game.sfxPowerup.play();
       } 
       else if (this.type==='bigShield') {
-          console.log(this.game.player.invulerableTimer);
           this.game.player.invulerableTimer += 10000;
+          this.game.sfxPowerup.play();
+      }
+      else if (this.type==='ammoPowerup') {
+          this.game.player.powerupTimer += 7000;
+          this.game.sfxPowerup.play();
+      }
+      else if (this.type==='ammoPowerupBig') {
+          this.game.player.powerupTimer += 1400;
           this.game.sfxPowerup.play();
       }
   }

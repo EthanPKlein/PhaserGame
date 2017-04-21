@@ -16,10 +16,13 @@ export default class extends Phaser.State {
     this.load.image('ship', 'assets/images/ship.png');
     this.load.image('shipShield', 'assets/images/ship_shielded.png');
 
-    this.load.image('asteroid', 'assets/images/asteroid.png');
+    
     this.load.image('space', 'assets/images/space.png');
-    this.load.image('bullet', 'assets/images/bullet.png');
 
+    this.load.image('bullet', 'assets/images/bullet.png');
+    this.load.image('bulletStrong', 'assets/images/bulletStrong.png');
+
+    this.load.image('asteroid', 'assets/images/asteroid.png');
     this.load.image('comet_1', 'assets/images/comet_1.png');
     this.load.image('comet_0', 'assets/images/comet_0.png');
     this.load.image('iron_2', 'assets/images/iron_2.png');
@@ -42,6 +45,8 @@ export default class extends Phaser.State {
     this.load.image('bigTime', 'assets/images/bigtime.png');
     this.load.image('shield', 'assets/images/shield.png');
     this.load.image('bigShield', 'assets/images/shieldBig.png');
+    this.load.image('ammoPowerup', 'assets/images/ammoPowerup.png');
+    this.load.image('ammoPowerupBig', 'assets/images/ammoPowerupBig.png');
 
     this.load.image('fireParticle', 'assets/images/fire.png');
     this.load.image('asteroidParticle', 'assets/images/asteroid_particle.png');

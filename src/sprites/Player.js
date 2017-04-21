@@ -10,6 +10,7 @@ export default class extends Phaser.Sprite {
     this.velocity = {x: 0, y: 0};
     this.health = 3;
     this.invulerableTimer = 4000;
+    this.powerupTimer = 0;
     this.alpha = 1;
     this.bullets = 0;
     this.score = 0;
@@ -22,6 +23,10 @@ export default class extends Phaser.Sprite {
     this.invulerableTimer-= this.game.getDelta();
     if (this.invulerableTimer < 0) {
       this.invulerableTimer = 0;
+    }
+    this.powerupTimer-= this.game.getDelta();
+    if (this.powerupTimer < 0) {
+      this.powerupTimer = 0;
     }
     this.redraw();
   }
@@ -114,6 +119,13 @@ export default class extends Phaser.Sprite {
 
   isAlive() {
     return this.health > 0;
+  }
+
+  hasPowerup() {
+    if (this.powerupTimer > 0) {
+      return true;
+    }
+    return false;
   }
 
   _handleInput(delta) {
