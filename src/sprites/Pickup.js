@@ -43,6 +43,16 @@ export default class extends Phaser.Sprite {
       else if (this.type==='bigTime') {
           this.game.gameTimer += 15000;
           this.game.sfxPowerup.play();
+      } 
+      else if (this.type==='shield') {
+          console.log(this.game.player.invulerableTimer);
+          this.game.player.invulerableTimer += 5000;
+          this.game.sfxPowerup.play();
+      } 
+      else if (this.type==='bigShield') {
+          console.log(this.game.player.invulerableTimer);
+          this.game.player.invulerableTimer += 10000;
+          this.game.sfxPowerup.play();
       }
   }
 

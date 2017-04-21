@@ -20,6 +20,9 @@ export default class extends Phaser.Sprite {
     this.move();
     this.forceInBounds();
     this.invulerableTimer-= this.game.getDelta();
+    if (this.invulerableTimer < 0) {
+      this.invulerableTimer = 0;
+    }
   }
 
   move() {
