@@ -51,13 +51,13 @@ var definitions = [
 
     // lvl 9
     {
-        enemies: { comet: 30, iron: 20, alien: 3, bouncy: 1 },
+        enemies: { comet: 26, iron: 15, alien: 3, bouncy: 1 },
         pickups: { bigAmmo: 2, health: 3, time: 4, shield: 2, bigShield: 2,  ammoPowerup: 2, ammoPowerupBig: 2 }
     },
 
     // lvl 10
     {
-        enemies: { comet: 25, iron: 30, alien: 4, },
+        enemies: { comet: 25, iron: 20, alien: 4, bouncy: 2 },
         pickups: { bigAmmo: 2, time: 2, bigTime: 2 }
     },
 
